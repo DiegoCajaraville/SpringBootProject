@@ -1,0 +1,18 @@
+version: '3.7'
+
+services:
+  db:
+    image: postgres:latest
+    restart: always
+    container_name: postgres_database
+    hostname: admin
+    environment:
+      POSTGRES_DB: sistema_blog
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    volumes:
+      - ~/Documents\GitHub\SpringBootProject\docker\database\data:/var/lib/postgresql/data
+      - ~/Documents\GitHub\SpringBootProject\docker\database\sql\create_schema.sql:/docker-entrypoint-initdb.d/create_schema.sql
+      - ~/Documents\GitHub\SpringBootProject\docker\database\sql\data.sql:/docker-entrypoint-initdb.d/data.sql
+    ports:
+      - "5432:5432"
