@@ -3,6 +3,7 @@ package com.teleco.gestor_servicios.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,6 +19,9 @@ import com.teleco.gestor_servicios.repository.PublicacionRepositorio;
 
 @Service
 public class PublicacionServicioImplementation implements PublicacionServicio {
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Autowired
     private PublicacionRepositorio publicacionRepositorio;
@@ -102,10 +106,13 @@ public class PublicacionServicioImplementation implements PublicacionServicio {
      */
     private Publicacion transformToEntity(PublicacionDto publicacionDto) {
 
-        Publicacion publicacion = new Publicacion();
-        publicacion.setTitulo(publicacionDto.getTitulo());
-        publicacion.setDescripcion(publicacionDto.getDescripcion());
-        publicacion.setContenido(publicacionDto.getContenido());
+        Publicacion publicacion = modelMapper.map(publicacionDto, Publicacion.class);
+
+        // METODO A MANO
+        //Publicacion publicacion = new Publicacion();
+        //publicacion.setTitulo(publicacionDto.getTitulo());
+        //publicacion.setDescripcion(publicacionDto.getDescripcion());
+        //publicacion.setContenido(publicacionDto.getContenido());
 
         return publicacion;
 
@@ -118,14 +125,16 @@ public class PublicacionServicioImplementation implements PublicacionServicio {
      */
     private PublicacionDto transformToDTO(Publicacion publicacion) {
 
-        PublicacionDto publicacionDto = new PublicacionDto();
-        publicacionDto.setId(publicacion.getId());
-        publicacionDto.setTitulo(publicacion.getTitulo());
-        publicacionDto.setDescripcion(publicacion.getDescripcion());
-        publicacionDto.setContenido(publicacion.getContenido());
+        PublicacionDto publicacionDto = modelMapper.map(publicacion, PublicacionDto.class);
+
+        // METODO A MANO
+        //PublicacionDto publicacionDto = new PublicacionDto();
+        //publicacionDto.setId(publicacion.getId());
+        //publicacionDto.setTitulo(publicacion.getTitulo());
+        //publicacionDto.setDescripcion(publicacion.getDescripcion());
+        //publicacionDto.setContenido(publicacion.getContenido());
 
         return publicacionDto;
-
     }
 
 

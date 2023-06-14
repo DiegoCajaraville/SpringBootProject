@@ -3,6 +3,7 @@ package com.teleco.gestor_servicios.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,9 @@ import com.teleco.gestor_servicios.repository.PublicacionRepositorio;
 
 @Service
 public class ComentarioServicioImplementation implements ComentarioServicio {
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Autowired
     private ComentarioRepositorio comentarioRepositorio;
@@ -103,22 +107,28 @@ public class ComentarioServicioImplementation implements ComentarioServicio {
 
     private ComentarioDTO transformToDTO(Comentario comentario) {
 
-        ComentarioDTO comentarioDTO = new ComentarioDTO();
-        comentarioDTO.setId(comentario.getId());
-        comentarioDTO.setNombre(comentario.getNombre());
-        comentarioDTO.setEmail(comentario.getEmail());
-        comentarioDTO.setBody(comentario.getBody());
+        ComentarioDTO comentarioDTO = modelMapper.map(comentario, ComentarioDTO.class);
+
+        // METODO A MANO
+        //ComentarioDTO comentarioDTO = new ComentarioDTO();
+        //comentarioDTO.setId(comentario.getId());
+        //comentarioDTO.setNombre(comentario.getNombre());
+        //comentarioDTO.setEmail(comentario.getEmail());
+        //comentarioDTO.setBody(comentario.getBody());
 
         return comentarioDTO;
     }
     
     private Comentario transformToEntity(ComentarioDTO comentarioDTO) {
+
+        Comentario comentario = modelMapper.map(comentarioDTO, Comentario.class);
         
-        Comentario comentario = new Comentario();
-        comentario.setId(comentarioDTO.getId());
-        comentario.setNombre(comentarioDTO.getNombre());
-        comentario.setEmail(comentarioDTO.getEmail());
-        comentario.setBody(comentarioDTO.getBody());
+        // METODO A MANO
+        //Comentario comentario = new Comentario();
+        //comentario.setId(comentarioDTO.getId());
+        //comentario.setNombre(comentarioDTO.getNombre());
+        //comentario.setEmail(comentarioDTO.getEmail());
+        //comentario.setBody(comentarioDTO.getBody());
 
         return comentario;
     }

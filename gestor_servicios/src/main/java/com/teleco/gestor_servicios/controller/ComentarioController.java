@@ -2,6 +2,8 @@ package com.teleco.gestor_servicios.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,14 +39,14 @@ public class ComentarioController {
     }
 
     @PostMapping("/publicaciones/{publicacionId}/comentarios")
-    public ResponseEntity<ComentarioDTO> guardarComentario(@PathVariable(value = "publicacionId") long publicacionId, @RequestBody ComentarioDTO comentarioDTO) {
+    public ResponseEntity<ComentarioDTO> guardarComentario(@PathVariable(value = "publicacionId") long publicacionId, @Valid @RequestBody ComentarioDTO comentarioDTO) {
 
         return new ResponseEntity<ComentarioDTO>(comentarioServicio.crearComentario(publicacionId, comentarioDTO), HttpStatus.CREATED);
 
     }
 
     @PutMapping("/publicaciones/{publicacionId}/comentarios/{id}")
-    public ResponseEntity<ComentarioDTO> actualizarComentario(@PathVariable(value = "publicacionId") long publicacionId, @PathVariable(value = "id") long comentarioId, @RequestBody ComentarioDTO comentarioDTO) {
+    public ResponseEntity<ComentarioDTO> actualizarComentario(@PathVariable(value = "publicacionId") long publicacionId, @PathVariable(value = "id") long comentarioId, @Valid @RequestBody ComentarioDTO comentarioDTO) {
 
         return new ResponseEntity<ComentarioDTO>(comentarioServicio.actualizarComentario(publicacionId, comentarioId, comentarioDTO), HttpStatus.OK);
     }

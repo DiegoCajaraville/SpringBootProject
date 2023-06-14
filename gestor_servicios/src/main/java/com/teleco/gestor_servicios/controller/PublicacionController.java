@@ -1,10 +1,13 @@
 package com.teleco.gestor_servicios.controller;
 
+import javax.validation.Valid;
+
 //import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,8 +47,10 @@ public class PublicacionController {
 
     }
 
+    // Si se quiere validar que la entrada es correcta, se hace en el DTO
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    public ResponseEntity<PublicacionDto> guardarPublicacion(@RequestBody PublicacionDto publicacionDto) {
+    public ResponseEntity<PublicacionDto> guardarPublicacion(@Valid @RequestBody PublicacionDto publicacionDto) {
 
         return new ResponseEntity<>(
                 publicacionServicio.crearPublicacion(publicacionDto),
@@ -53,9 +58,10 @@ public class PublicacionController {
 
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<PublicacionDto> actualizarPublicacion(@PathVariable(name = "id") long id,
-            @RequestBody PublicacionDto publicacionDto) {
+            @Valid @RequestBody PublicacionDto publicacionDto) {
 
         return new ResponseEntity<>(
             publicacionServicio.actualizarPublicacion(publicacionDto, id),
@@ -63,6 +69,7 @@ public class PublicacionController {
 
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminarPublicacion(@PathVariable(name = "id") long id) {
 

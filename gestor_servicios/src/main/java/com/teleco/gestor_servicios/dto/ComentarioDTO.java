@@ -1,10 +1,22 @@
 package com.teleco.gestor_servicios.dto;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 public class ComentarioDTO {
 
     private long id;
+
+    @NotEmpty(message = "El nombre no debe estar vacio")
     private String nombre;
+
+    @NotEmpty(message = "El email no debe estar vacio")
+    @Email
     private String email;
+
+    @NotEmpty
+    @Size(min = 10, message = "El cuerpo del comentario debe tener al menos 10 caracteres")
     private String body;
 
     /**

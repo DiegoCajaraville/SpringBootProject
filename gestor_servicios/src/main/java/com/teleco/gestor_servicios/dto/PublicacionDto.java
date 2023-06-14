@@ -1,11 +1,27 @@
 package com.teleco.gestor_servicios.dto;
 
+import java.util.Set;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
+import com.teleco.gestor_servicios.entities.Comentario;
+
 public class PublicacionDto {
 
     private Long id;
+
+    @NotEmpty
+    @Size(min = 2, message = "El titulo de la publicacion debería tener al menos 2 caracteres")
     private String titulo;
+
+    @NotEmpty
+    @Size(min = 10, message = "La descripcion de la publicacion debería tener al menos 10 caracteres")
     private String descripcion;
+
+    @NotEmpty
     private String contenido;
+    private Set<Comentario> comentarios;
 
     /**
      * 
@@ -80,6 +96,20 @@ public class PublicacionDto {
      */
     public void setContenido(String contenido) {
         this.contenido = contenido;
+    }
+
+    /**
+     * @return the comentarios
+     */
+    public Set<Comentario> getComentarios() {
+        return comentarios;
+    }
+
+    /**
+     * @param comentarios the comentarios to set
+     */
+    public void setComentarios(Set<Comentario> comentarios) {
+        this.comentarios = comentarios;
     }
 
 }
